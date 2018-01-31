@@ -1,23 +1,11 @@
 from flask import Flask, jsonify, make_response, request, abort
+from flask_cors import CORS, cross_origin
 
-# Set up flask and twilio
+# Set up flask
 app = Flask(__name__)
+CORS(app)
 
-tasks = [
-    {
-        'id': 1,
-        'title': u'Buy groceries',
-        'description': u'Milk, Cheese, Pizza, Fruit, Tylenol', 
-        'done': False
-    },
-    {
-        'id': 2,
-        'title': u'Learn Python',
-        'description': u'Need to find a good Python tutorial on the web', 
-        'done': False
-    }
-]
-
+# Our ephemeral database because hooking up to AWS takes time and I aint got no time
 transcs = {}
 
 @app.route("/")
@@ -37,6 +25,7 @@ def get_transc():
 	if acc_num in transcs:
 		return jsonify({acc_num: transcs[acc_num]})
 	else:
+        # TO DO return a more descriptive error message
 		abort(404)
 
 @app.route('/todo/api/v1.0/post_transc', methods=['POST'])
@@ -49,7 +38,6 @@ def post_transc():
         'transc_amnt': request.json['transc_amnt'],
         'data': {}
     }
-
     # Place in user dictionary
     user_acc = request.json['acc_num']
     if user_acc in transcs:

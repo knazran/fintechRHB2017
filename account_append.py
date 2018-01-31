@@ -6,8 +6,8 @@ filename_in = "transactional_dat.csv"
 account_f = "accounts-large.csv"
 users_f = "users-large.csv"
 file_out = "trans-out.csv"
-num_account = 50000
-num_users = 20000
+num_account = 1000
+num_users = 500
 
 # CSV stuff
 in_read = csv.reader(open(filename_in,"rb"), delimiter=',',quoting=csv.QUOTE_ALL)
@@ -21,8 +21,8 @@ user_write.writerow(["User", "Spend_Limit", "Round_up"])
 
 accounts = []
 users = []
-spending_limit = [50, 100, 300, 500, 1000, -99]
-round_up = [0.1, 1, 10]
+spending_limit = [500, 1000, 5000, -99]
+round_up = [0, 1]
 
 start = timeit.default_timer()
 
